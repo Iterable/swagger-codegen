@@ -9,7 +9,6 @@ version.properties
 lib/*
 build/*
 generated-files/*
-generated-code/*
 *.swp
 *.swo
 
