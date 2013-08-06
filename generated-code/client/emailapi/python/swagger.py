@@ -12,7 +12,7 @@ import urllib2
 import httplib
 import json
 import datetime
-import pprint
+# import pprint
 
 from models import *
 
@@ -71,13 +71,13 @@ class ApiClient:
         request = MethodRequest(method=method, url=url, headers=headers,
                                 data=data)
 
-        print('request is:')
-        pp = pprint.PrettyPrinter(indent=4)
-        pp.pprint(request)
-        print('method is: ' + method)
-        print('headers is: ') 
-        pp.pprint(headers)
-        print('data is: ' + data)
+        # print('request is:')
+        # pp = pprint.PrettyPrinter(indent=4)
+        # pp.pprint(request)
+        # print('method is: ' + method)
+        # print('headers is: ') 
+        # pp.pprint(headers)
+        # print('data is: ' + data)
         
         
 
@@ -87,9 +87,6 @@ class ApiClient:
             response = urllib2.urlopen(request)
         except urllib2.HTTPError, e:
             import traceback
-            print('caugh exception')
-            print(str(e.reason))
-            print(traceback.format_exc())
             return 0
 
         if 'Set-Cookie' in response.headers:
@@ -218,10 +215,6 @@ class MethodRequest(urllib2.Request):
         `urllib2.Request` except it also takes an optional `method`
         keyword argument. If supplied, `method` will be used instead of
         the default."""
-
-        print('args ' + str(args))
-        print('kwargs ' + str(kwargs))
-
 
         if 'method' in kwargs:
             self.method = kwargs.pop('method')
