@@ -195,10 +195,5 @@ class MethodRequest(urllib.request.Request):
         keyword argument. If supplied, `method` will be used instead of
         the default."""
 
-        if 'method' in kwargs:
-            self.method = kwargs.pop('method')
         return urllib.request.Request.__init__(self, *args, **kwargs)
-
-    def get_method(self):
-        return getattr(self, 'method', urllib.request.Request.get_method(self))
 
