@@ -7,14 +7,12 @@ templates."""
 import sys
 import os
 import re
-import urllib
-import urllib2
-import httplib
+import urllib.request, urllib.error, urllib.parse
+import http.client
 import json
 import datetime
-import pprint
 
-from models import *
+from .models import *
 
 
 class ApiClient:
@@ -34,7 +32,7 @@ class ApiClient:
         url = self.apiServer + resourcePath
         headers = {}
         if headerParams:
-            for param, value in headerParams.iteritems():
+            for param, value in headerParams.items():
                 headers[param] = value
 
         #headers['Content-type'] = 'application/json'
@@ -45,13 +43,14 @@ class ApiClient:
 
         data = None
 
+        
         if queryParams:
             # Need to remove None values, these should not be sent
             sentQueryParams = {}
             for param, value in queryParams.items():
                 if value != None:
                     sentQueryParams[param] = value
-            url = url + '?' + urllib.urlencode(sentQueryParams)
+            url = url + '?' + urllib.parse.urlencode(sentQueryParams)
 
         if method in ['GET']:
 
@@ -68,36 +67,21 @@ class ApiClient:
         else:
             raise Exception('Method ' + method + ' is not recognized.')
 
-        request = MethodRequest(method=method, url=url, headers=headers,
-                                data=data)
+        if data:
+            data = data.encode('utf-8')
 
-        print('request is:')
-        pp = pprint.PrettyPrinter(indent=4)
-        pp.pprint(request)
-        print('method is: ' + method)
-        print('headers is: ') 
-        pp.pprint(headers)
-        print('data is: ' + data)
-        
-        
+        requestParams = MethodRequest(method=method, url=url,
+                                       headers=headers, data=data)
 
-        response = {}
         # Make the request
-        try:
-            response = urllib2.urlopen(request)
-        except urllib2.HTTPError, e:
-            import traceback
-            print('caugh exception')
-            print(str(e.reason))
-            print(traceback.format_exc())
-            return 0
-
-        if 'Set-Cookie' in response.headers:
-            self.cookie = response.headers['Set-Cookie']
-        string = response.read()
+        request = urllib.request.urlopen(requestParams)
+        encoding = request.headers.get_content_charset()
+        if not encoding:
+            encoding = 'iso-8859-1'
+        response = request.read().decode(encoding)
 
         try:
-            data = json.loads(string)
+            data = json.loads(response)
         except ValueError:  # PUT requests don't return anything
             data = None
 
@@ -111,16 +95,16 @@ class ApiClient:
             string -- quoted value
         """
         if type(obj) == list:
-            return urllib.quote(','.join(obj))
+            return urllib.parse.quote(','.join(obj))
         else:
-            return urllib.quote(str(obj))
+            return urllib.parse.quote(str(obj))
 
     def sanitizeForSerialization(self, obj):
         """Dump an object into JSON for POSTing."""
 
         if type(obj) == type(None):
             return None
-        elif type(obj) in [str, int, long, float, bool]:
+        elif type(obj) in [str, int, float, bool]:
             return obj
         elif type(obj) == list:
             return [self.sanitizeForSerialization(subObj) for subObj in obj]
@@ -132,17 +116,8 @@ class ApiClient:
             else:
                 objDict = obj.__dict__
             return {key: self.sanitizeForSerialization(val)
-                    for (key, val) in objDict.iteritems()
+                    for (key, val) in objDict.items()
                     if key != 'swaggerTypes'}
-
-        if type(postData) == list:
-            # Could be a list of objects
-            if type(postData[0]) in safeToDump:
-                data = json.dumps(postData)
-            else:
-                data = json.dumps([datum.__dict__ for datum in postData])
-        elif type(postData) not in safeToDump:
-            data = json.dumps(postData.__dict__)
 
     def deserialize(self, obj, objClass):
         """Derialize a JSON string into an object.
@@ -162,12 +137,12 @@ class ApiClient:
                 subClass = match.group(1)
                 return [self.deserialize(subObj, subClass) for subObj in obj]
 
-            if (objClass in ['int', 'float', 'long', 'dict', 'list', 'str', 'bool', 'datetime']):
+            if (objClass in ['int', 'float', 'dict', 'list', 'str', 'bool', 'datetime']):
                 objClass = eval(objClass)
             else:  # not a native type, must be model class
                 objClass = eval(objClass + '.' + objClass)
 
-        if objClass in [int, long, float, dict, list, str, bool]:
+        if objClass in [int, float, dict, list, str, bool]:
             return objClass(obj)
         elif objClass == datetime:
             # Server will always return a time stamp in UTC, but with
@@ -178,10 +153,11 @@ class ApiClient:
 
         instance = objClass()
 
-        for attr, attrType in instance.swaggerTypes.iteritems():
+        for attr, attrType in instance.swaggerTypes.items():
+
             if attr in obj:
                 value = obj[attr]
-                if attrType in ['str', 'int', 'long', 'float', 'bool']:
+                if attrType in ['str', 'int', 'float', 'bool']:
                     attrType = eval(attrType)
                     try:
                         value = attrType(value)
@@ -211,23 +187,18 @@ class ApiClient:
         return instance
 
 
-class MethodRequest(urllib2.Request):
+class MethodRequest(urllib.request.Request):
 
     def __init__(self, *args, **kwargs):
         """Construct a MethodRequest. Usage is the same as for
-        `urllib2.Request` except it also takes an optional `method`
+        `urllib.Request` except it also takes an optional `method`
         keyword argument. If supplied, `method` will be used instead of
         the default."""
 
-        print('args ' + str(args))
-        print('kwargs ' + str(kwargs))
-
-
         if 'method' in kwargs:
             self.method = kwargs.pop('method')
-        return urllib2.Request.__init__(self, *args, **kwargs)
+        return urllib.request.Request.__init__(self, *args, **kwargs)
 
     def get_method(self):
-        return getattr(self, 'method', urllib2.Request.get_method(self))
-
+        return getattr(self, 'method', urllib.request.Request.get_method(self))
 

@@ -34,6 +34,6 @@ object ScalaEmailApiGenerator extends BasicScalaGenerator {
   // supporting classes
   override def supportingFiles = List(
     ("apiInvoker.mustache", destinationDir + java.io.File.separator + invokerPackage.get.replace(".", java.io.File.separator) + java.io.File.separator, "ApiInvoker.scala"),
-    ("pom.mustache", "samples/client/petstore/scala", "pom.xml")
+    ("pom.mustache", "generated-code/client/emailapi/scala", "pom.xml")
   )
 }
