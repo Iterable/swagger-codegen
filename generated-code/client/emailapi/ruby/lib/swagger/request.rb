@@ -78,14 +78,16 @@ module Swagger
         p = p.gsub("{#{key}}", value.to_s)
       end
 
+      # THE FOLLOWING BLOCK DOESN'T WORK WITH ITERABLE'S ENDPOINT, SO COMMENT OUT FOR NOW
+
       # Stick a .{format} placeholder into the path if there isn't
       # one already or an actual format like json or xml
       # e.g. /words/blah => /words.{format}/blah
-      if Swagger::Configuration.format
-        unless ['.json', '.xml', '{format}'].any? {|s| p.downcase.include? s }
-          p = p.sub(/^(\/?\w+)/, "\\1.#{format}")
-        end
-      end
+      # if Swagger.configuration.inject_format
+      #   unless ['.json', '.xml', '{format}'].any? {|s| p.downcase.include? s }
+      #     p = p.sub(/^(\/?\w+)/, "\\1.#{format}")
+      #   end
+      # end
 
       p = p.sub("{format}", self.format.to_s)
       

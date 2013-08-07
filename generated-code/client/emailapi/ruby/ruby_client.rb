@@ -8,9 +8,10 @@ require 'targetemailrequest'
 Swagger.configure do |config|
   config.api_key = 'iterableApiKey' 
   config.host = 'localhost:9000'
-  config.base_path = '/'  # maybe /api
-  config.format = 'json'
+  config.base_path = '/'  
 end
+
+puts Swagger.configuration.inspect
 
 # request
 ter = TargetEmailRequest.new
