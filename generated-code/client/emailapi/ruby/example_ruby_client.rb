@@ -9,9 +9,10 @@ Swagger.configure do |config|
   config.api_key = 'iterableApiKey' 
   config.host = 'localhost:9000'
   config.base_path = '/'  
-  config.inject_format = false
+  config.inject_format = false  # important, set this to false!
 end
 
+# print the swagger configuration
 puts Swagger.configuration.inspect
 
 # request
@@ -20,5 +21,6 @@ ter.campaign_id = 3
 ter.recipient_email = 'girish@iterable.com'
 ter.inline_css = false
 
+# print out the TargetEmailRequest
 puts ter.inspect
 response = Api_api.target(ter)
