@@ -9,6 +9,7 @@ Swagger.configure do |config|
   config.api_key = 'iterableApiKey' 
   config.host = 'localhost:9000'
   config.base_path = '/'  
+  config.inject_format = false
 end
 
 puts Swagger.configuration.inspect
