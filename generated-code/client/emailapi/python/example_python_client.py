@@ -1,5 +1,6 @@
-from python import *
-from python.models import *
+import swagger
+import ApiApi
+from models import *
 
 apiUrl = 'http://localhost:9000'
 apiKey = 'iterableApiKey'
