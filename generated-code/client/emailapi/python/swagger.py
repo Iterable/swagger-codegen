@@ -12,7 +12,6 @@ import urllib2
 import httplib
 import json
 import datetime
-# import pprint
 
 from models import *
 
@@ -71,24 +70,8 @@ class ApiClient:
         request = MethodRequest(method=method, url=url, headers=headers,
                                 data=data)
 
-        # print('request is:')
-        # pp = pprint.PrettyPrinter(indent=4)
-        # pp.pprint(request)
-        # print('method is: ' + method)
-        # print('headers is: ') 
-        # pp.pprint(headers)
-        # print('data is: ' + data)
-        
-        
-
-        response = {}
         # Make the request
-        try:
-            response = urllib2.urlopen(request)
-        except urllib2.HTTPError, e:
-            import traceback
-            return 0
-
+        response = urllib2.urlopen(request)
         if 'Set-Cookie' in response.headers:
             self.cookie = response.headers['Set-Cookie']
         string = response.read()

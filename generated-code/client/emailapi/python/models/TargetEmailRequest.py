@@ -21,6 +21,7 @@ class TargetEmailRequest:
 
     def __init__(self):
         self.swaggerTypes = {
+            'dataFields': 'Map[string,Object]',
             'campaignId': 'long',
             'inlineCss': 'bool',
             'recipientEmail': 'str'
@@ -28,6 +29,7 @@ class TargetEmailRequest:
         }
 
 
+        self.dataFields = None # Map[string,Object]
         self.campaignId = None # long
         self.inlineCss = None # bool
         self.recipientEmail = None # str

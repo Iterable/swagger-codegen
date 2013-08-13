@@ -25,8 +25,10 @@ export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -DloggerPath=conf/
 ags="$@"
 
 if [ -f $APP_DIR/target/scala-2.9.1/swagger-codegen.jar ]; then
-  scala -cp target/scala-2.9.1/swagger-codegen.jar $ags
+        echo 'scala 2.9'
+  /Users/hjz/Downloads/scala-2.9.3/bin/scala -cp target/scala-2.9.1/swagger-codegen.jar $ags
 elif [[ -f $APP_DIR/target/scala-2.10/swagger-codegen.jar  ]]; then
+        echo 'scala 2.10'
   scala -cp target/scala-2.10/swagger-codegen.jar $ags
 else
   ./sbt assembly
