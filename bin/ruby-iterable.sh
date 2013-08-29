@@ -4,6 +4,11 @@ SCRIPT="$0"
 ENV="$1"
 API_KEY="iterableApiKey"
 
+if [ "$1" == "-h" ]; then
+  echo "Usage: `basename $0` add 'prod' to generate api from prod"
+  exit 0
+fi
+
 echo $ENV
 
 while [ -h "$SCRIPT" ] ; do
