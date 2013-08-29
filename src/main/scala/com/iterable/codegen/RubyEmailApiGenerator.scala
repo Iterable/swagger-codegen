@@ -18,6 +18,16 @@ import com.wordnik.swagger.codegen.BasicRubyGenerator
 
 object RubyEmailApiGenerator extends BasicRubyGenerator {
   def main(args: Array[String]) = generateClient(args)
+
+  // param `name` will be `api` according to the iterable api paths,
+  // so just name the api `iterable_api`
+  override def toApiName(name: String) = {
+    "Iterable_api"
+  }
+
+  override def toApiFilename(name: String) = {
+    "iterable_api"
+  }
   
   // to avoid recompiling ...
   override def templateDir = "src/main/resources/ruby"

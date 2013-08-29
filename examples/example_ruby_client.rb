@@ -3,7 +3,7 @@ location = '../generated-code/client/iterableapi/ruby'
 $LOAD_PATH << location << './lib' << './models' << location + '/lib' << location + '/models'
 
 require 'swagger'
-require 'api_api' # aka email_api
+require 'iterable_api' # aka email_api
 require 'targetemailrequest'
 require 'subscriber'
 require 'subscriberequest'
@@ -24,19 +24,18 @@ ter.inline_css = false
 
 puts 'Request: '
 puts ter.inspect
-response = Api_api.target(ter)
+response = Iterable_api.target(ter)
 
-# swang a list sub
+# send a list sub
 subscriber = Subscriber.new
 subscriber.email = 'andrew@iterable.com'
 puts subscriber.inspect
 
 sr = SubscribeRequest.new
 sr.subscribers = [subscriber]
-#sr.subscribers = [{:email => 'girish@iterable.com'}]
 sr.list_id = 3
 
 puts sr.inspect
 
-response = Api_api.subscribe(sr)
+response = Iterable_api.subscribe(sr)
 
