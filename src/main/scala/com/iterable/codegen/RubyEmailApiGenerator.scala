@@ -23,5 +23,5 @@ object RubyEmailApiGenerator extends BasicRubyGenerator {
   override def templateDir = "src/main/resources/ruby"
 
   // where to write generated code
-  override def destinationDir = "generated-code/client/emailapi/ruby"
+  override def destinationDir = "generated-code/client/iterableapi/ruby"
 }

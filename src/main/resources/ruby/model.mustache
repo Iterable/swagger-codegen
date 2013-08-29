@@ -43,7 +43,15 @@ class {{classname}}
   def to_body
     body = {}
     {{classname}}.attribute_map.each_pair do |key,value|
-      body[value] = self.send(key) unless self.send(key).nil?
+      v = self.send(key)
+      if v.is_a?(Array)
+        array = Array.new
+        v.each do |arrayValue|
+          array.push arrayValue.to_body
+        end
+        v = array
+      end
+      body[value] = v unless v.nil?
     end
     body
   end
