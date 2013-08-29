@@ -7,6 +7,8 @@ puts $LOAD_PATH
 require 'swagger'
 require 'api_api' # aka email_api
 require 'targetemailrequest'
+require 'subscriber'
+require 'subscriberequest'
 
 Swagger.configure do |config|
   config.api_key = 'iterableApiKey' 
@@ -18,7 +20,7 @@ end
 # print the swagger configuration
 puts Swagger.configuration.inspect
 
-# swang a triggered email
+# swang a targeted email
 ter = TargetEmailRequest.new
 ter.campaign_id = 9
 ter.recipient_email = 'girish@iterable.com'
@@ -27,3 +29,12 @@ ter.inline_css = false
 # print out the TargetEmailRequest
 puts ter.inspect
 response = Api_api.target(ter)
+
+# swang a list sub
+sr = SubscribeRequest.new
+subscriber = Subscriber.new
+subscriber.email = 'girish@iterable.com'
+sr.list_id = 8
+sr.subscribers = [subscriber]
+puts sr.inspect
+
