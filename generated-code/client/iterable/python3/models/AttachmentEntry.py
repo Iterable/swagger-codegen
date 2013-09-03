@@ -32,6 +32,6 @@ class AttachmentEntry:
         self.content = None # str
         #Name of the file
         self.name = None # str
-        #MIME content type of the file
+        #MIME content type. Use 'application/octet-stream' for pdfs, docs, binary files
         self.mimeType = None # str
         

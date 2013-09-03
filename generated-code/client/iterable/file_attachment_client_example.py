@@ -23,7 +23,7 @@ attachmentEntry.mimeType ='application/octet-stream'
 targetEmailRequest = TargetEmailRequest.TargetEmailRequest()
 targetEmailRequest.campaignId = 1
 targetEmailRequest.recipientEmail = 'justin@iterable.com'
-#targetEmailRequest.attachments = [attachmentEntry]
+targetEmailRequest.attachments = [attachmentEntry]
 
 response = emailApi.target(targetEmailRequest)
 

@@ -30,5 +30,6 @@ class IterableApiResponse:
 
         self.params = None # Map[string,string]
         self.code = None # Value
+        #Error message
         self.msg = None # str
         
