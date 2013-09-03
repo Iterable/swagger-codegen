@@ -21,15 +21,15 @@ class IterableApiResponse:
 
     def __init__(self):
         self.swaggerTypes = {
-            'code': 'Value',
             'params': 'Map[string,string]',
+            'code': 'str',
             'msg': 'str'
 
         }
 
 
-        self.code = None # Value
         self.params = None # Map[string,string]
+        self.code = None # str
         #Error message
         self.msg = None # str
         

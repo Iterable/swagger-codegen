@@ -23,7 +23,7 @@ class TargetEmailRequest:
         self.swaggerTypes = {
             'dataFields': 'Map[string, object]',
             'campaignId': 'long',
-            'inlineCss': 'Object',
+            'inlineCss': 'bool',
             'attachments': 'list[AttachmentEntry]',
             'recipientEmail': 'str'
 
@@ -34,7 +34,7 @@ class TargetEmailRequest:
         self.dataFields = None # Map[string, object]
         self.campaignId = None # long
         #Inline css to ensure proper rendering on gmail &amp; outlook clients
-        self.inlineCss = None # Object
+        self.inlineCss = None # bool
         #Total attachment size limited to 10MB
         self.attachments = None # list[AttachmentEntry]
         self.recipientEmail = None # str
