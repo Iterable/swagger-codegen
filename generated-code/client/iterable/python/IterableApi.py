@@ -23,7 +23,7 @@ import os
 from models import *
 
 
-class ApiApi(object):
+class IterableApi(object):
 
     def __init__(self, apiClient):
       self.apiClient = apiClient
@@ -35,7 +35,7 @@ class ApiApi(object):
         Args:
             body, TargetEmailRequest: Recipient and email id (required)
             
-        Returns: 
+        Returns: IterableApiResponse
         """
 
         allParams = ['body']
@@ -59,38 +59,11 @@ class ApiApi(object):
         response = self.apiClient.callAPI(resourcePath, method, queryParams,
                                           postData, headerParams)
 
-        
-        
-    def blast(self, body, **kwargs):
-        """Send email to a list
+        if not response:
+            return None
 
-        Args:
-            body, TargetEmailRequest: Pet object that needs to be added to the store (required)
-            
-        Returns: 
-        """
-
-        allParams = ['body']
-
-        params = locals()
-        for (key, val) in params['kwargs'].iteritems():
-            if key not in allParams:
-                raise TypeError("Got an unexpected keyword argument '%s' to method blast" % key)
-            params[key] = val
-        del params['kwargs']
-
-        resourcePath = '/api/email/blast'
-        resourcePath = resourcePath.replace('{format}', 'json')
-        method = 'POST'
-
-        queryParams = {}
-        headerParams = {}
-
-        postData = (params['body'] if 'body' in params else None)
-
-        response = self.apiClient.callAPI(resourcePath, method, queryParams,
-                                          postData, headerParams)
-
+        responseObject = self.apiClient.deserialize(response, 'IterableApiResponse')
+        return responseObject
         
         
     def subscribe(self, body, **kwargs):

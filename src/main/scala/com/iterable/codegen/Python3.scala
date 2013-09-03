@@ -23,6 +23,14 @@ import java.io.File
 object Python3 extends BasicPython3Generator with IterableGenerator {
   def main(args: Array[String]) = generateClient(args)
 
+  override def toApiName(name: String) = {
+    "IterableApi"
+  }
+
+  override def toApiFilename(name: String) = {
+    "IterableApi"
+  }
+  
   override def destinationDir = destDir("python3")
 
   override def supportingFiles = List(

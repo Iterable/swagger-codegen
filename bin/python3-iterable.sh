@@ -36,9 +36,9 @@ echo $@
 export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -DloggerPath=conf/log4j.properties"
 
 if [ "$ENV" = "prod" ]; then
-  ags="$@ com.iterable.codegen.Ruby http://api.iterable.com/api-docs.json $API_KEY"
+  ags="$@ com.iterable.codegen.Python3 http://api.iterable.com/api-docs.json $API_KEY"
 else
-  ags="$@ com.iterable.codegen.Ruby http://localhost:9000/api-docs.json $API_KEY"
+  ags="$@ com.iterable.codegen.Python3 http://localhost:9000/api-docs.json $API_KEY"
 fi
 
 

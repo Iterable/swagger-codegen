@@ -46,11 +46,11 @@ class Iterable_api
 	      end
       end
     end
-    Swagger::Request.new(:POST, path, {:params=>queryopts,:headers=>headers, :body=>post_body}).make
-    
+    response = Swagger::Request.new(:POST, path, {:params=>queryopts,:headers=>headers, :body=>post_body }).make.body
+    IterableApiResponse.new(response)
   end
 
-def self.blast (body,opts={})
+def self.subscribe (body,opts={})
     query_param_keys = []
 
     # verify existence of params
@@ -59,49 +59,7 @@ def self.blast (body,opts={})
     options = { :body => body}.merge(opts)
 
     #resource path
-    path = "/api/email/blast".sub('{format}','json')
-    
-    # pull querystring keys from options
-    queryopts = options.select do |key,value|
-      query_param_keys.include? key
-    end
-    
-    headers = nil
-    post_body = nil
-    if body != nil
-      if body.is_a?(Array)
-        array = Array.new
-        body.each do |item|
-          if item.respond_to?("to_body".to_sym)
-            array.push item.to_body
-          else
-            array.push item
-          end
-        end
-        post_body = array
-
-      else 
-        if body.respond_to?("to_body".to_sym)
-	        post_body = body.to_body
-	      else
-	        post_body = body
-	      end
-      end
-    end
-    Swagger::Request.new(:POST, path, {:params=>queryopts,:headers=>headers, :body=>post_body}).make
-    
-  end
-
-def self.unsubscribe (body,opts={})
-    query_param_keys = []
-
-    # verify existence of params
-    raise "body is required" if body.nil?
-    # set default values and merge with input
-    options = { :body => body}.merge(opts)
-
-    #resource path
-    path = "/api/lists/unsubscribe".sub('{format}','json')
+    path = "/api/lists/subscribe".sub('{format}','json')
     
     # pull querystring keys from options
     queryopts = options.select do |key,value|
@@ -134,7 +92,7 @@ def self.unsubscribe (body,opts={})
     ListResponse.new(response)
   end
 
-def self.subscribe (body,opts={})
+def self.unsubscribe (body,opts={})
     query_param_keys = []
 
     # verify existence of params
@@ -143,7 +101,7 @@ def self.subscribe (body,opts={})
     options = { :body => body}.merge(opts)
 
     #resource path
-    path = "/api/lists/subscribe".sub('{format}','json')
+    path = "/api/lists/unsubscribe".sub('{format}','json')
     
     # pull querystring keys from options
     queryopts = options.select do |key,value|

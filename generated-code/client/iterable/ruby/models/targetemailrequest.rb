@@ -1,10 +1,10 @@
 class TargetEmailRequest
-  attr_accessor :data_fields, :campaign_id, :inline_css, :recipient_email
+  attr_accessor :data_fields, :campaign_id, :inline_css, :attachments, :recipient_email
 
   # :internal => :external
   def self.attribute_map
   {
-      :data_fields => :dataFields, :campaign_id => :campaignId, :inline_css => :inlineCss, :recipient_email => :recipientEmail
+      :data_fields => :dataFields, :campaign_id => :campaignId, :inline_css => :inlineCss, :attachments => :attachments, :recipient_email => :recipientEmail
 
   }
   end
@@ -34,6 +34,17 @@ class TargetEmailRequest
         value = attributes["inlineCss"]
         send("#{name}=", value) if self.respond_to?(name)
 	      end
+      if TargetEmailRequest.attribute_map["attachments".to_sym] != nil
+        name = "attachments".to_sym
+        value = attributes["attachments"]
+        if value.is_a?(Array)
+	        array = Array.new
+	        value.each do |arrayValue|
+	          array.push AttachmentEntry.new(arrayValue)
+	        end
+	        send("#{name}=", array) if self.respond_to?(name)
+	      end
+        end
       if TargetEmailRequest.attribute_map["recipient_email".to_sym] != nil
         name = "recipient_email".to_sym
         value = attributes["recipientEmail"]
