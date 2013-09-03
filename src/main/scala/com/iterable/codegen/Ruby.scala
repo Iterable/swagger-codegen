@@ -1,3 +1,5 @@
+package com.iterable.codegen
+
 /**
  *  Copyright 2012 Wordnik, Inc.
  *
@@ -16,7 +18,7 @@
 
 import com.wordnik.swagger.codegen.BasicRubyGenerator
 
-object RubyEmailApiGenerator extends BasicRubyGenerator {
+object Ruby extends BasicRubyGenerator with IterableGenerator {
   def main(args: Array[String]) = generateClient(args)
 
   // param `name` will be `api` according to the iterable api paths,
@@ -28,10 +30,10 @@ object RubyEmailApiGenerator extends BasicRubyGenerator {
   override def toApiFilename(name: String) = {
     "iterable_api"
   }
-  
+
   // to avoid recompiling ...
   override def templateDir = "src/main/resources/ruby"
 
   // where to write generated code
-  override def destinationDir = "generated-code/client/iterableapi/ruby"
+  override def destinationDir = destDir("ruby")
 }

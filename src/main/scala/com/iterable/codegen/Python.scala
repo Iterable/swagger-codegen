@@ -1,3 +1,5 @@
+package com.iterable.codegen
+
 /**
  *  Copyright 2012 Wordnik, Inc.
  *
@@ -14,14 +16,14 @@
  *  limitations under the License.
  */
 
-import com.wordnik.swagger.codegen.BasicPython3Generator
+import com.wordnik.swagger.codegen.BasicPythonGenerator
 
 import java.io.File
 
-object Python3EmailApiGenerator extends BasicPython3Generator {
+object Python extends BasicPythonGenerator with IterableGenerator {
   def main(args: Array[String]) = generateClient(args)
 
-  override def destinationDir = "generated-code/client/emailapi/python3"
+  override def destinationDir = destDir("python")
 
   override def supportingFiles = List(
     ("__init__.mustache", destinationDir, "__init__.py"),
