@@ -2,12 +2,12 @@
 
 from python3 import *
 from python3.models import *
-
 import base64
 
-apiUrl = 'http://api.iterable.com'
 apiKey = 'YOUR_API_KEY'
+campaignId = 10000 # set the desired campaignid
 
+apiUrl = 'http://api.iterable.com'
 client = swagger.ApiClient(apiKey, apiUrl)
 emailApi = ApiApi.ApiApi(client)
 
@@ -21,7 +21,7 @@ attachmentEntry.name = filename
 attachmentEntry.mimeType ='application/octet-stream'
 
 targetEmailRequest = TargetEmailRequest.TargetEmailRequest()
-targetEmailRequest.campaignId = 1
+targetEmailRequest.campaignId = campaignId
 targetEmailRequest.recipientEmail = 'justin@iterable.com'
 targetEmailRequest.attachments = [attachmentEntry]
 
