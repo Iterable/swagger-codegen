@@ -5,8 +5,8 @@ from python3.models import *
 
 import base64
 
-apiUrl = 'http://localhost:9000'
-apiKey = 'iterableApiKey'
+apiUrl = 'http://api.iterable.com'
+apiKey = 'YOUR_API_KEY'
 
 client = swagger.ApiClient(apiKey, apiUrl)
 emailApi = ApiApi.ApiApi(client)
