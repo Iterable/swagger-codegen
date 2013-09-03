@@ -1,3 +1,5 @@
+package com.iterable.codegen
+
 /**
  *  Copyright 2012 Wordnik, Inc.
  *
@@ -16,24 +18,24 @@
 
 import com.wordnik.swagger.codegen.BasicScalaGenerator
 
-object ScalaEmailApiGenerator extends BasicScalaGenerator {
+object ScalaEmailApiGenerator extends BasicScalaGenerator with IterableGenerator {
   def main(args: Array[String]) = generateClient(args)
 
   // package for api invoker, error files
-  override def invokerPackage = Some("com.iterable.client")
-    
+  override def invokerPackage = Some("com.iterable.api.invoker")
+
   // where to write generated code
-  override def destinationDir = "generated-code/client/emailapi/scala/src/main/scala"
+  override def destinationDir = destDir("scala/src/main/scala")
 
   // package for models
-  override def modelPackage = Some("com.iterable.emailapi.model")
+  override def modelPackage = Some("com.iterable.api.model")
 
   // package for api classes
-  override def apiPackage = Some("com.iterable.emailapi.api")
+  override def apiPackage = Some("com.iterable.api.client")
 
   // supporting classes
   override def supportingFiles = List(
     ("apiInvoker.mustache", destinationDir + java.io.File.separator + invokerPackage.get.replace(".", java.io.File.separator) + java.io.File.separator, "ApiInvoker.scala"),
-    ("pom.mustache", "generated-code/client/emailapi/scala", "pom.xml")
+    ("pom.mustache", destDir("scala"), "pom.xml")
   )
 }

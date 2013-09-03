@@ -196,3 +196,4 @@ class MethodRequest(urllib.request.Request):
         the default."""
 
         return urllib.request.Request.__init__(self, *args, **kwargs)
+
