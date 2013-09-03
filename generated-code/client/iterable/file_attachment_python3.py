@@ -9,7 +9,7 @@ campaignId = 10000 # set the desired campaignid
 
 apiUrl = 'http://api.iterable.com'
 client = swagger.ApiClient(apiKey, apiUrl)
-emailApi = ApiApi.ApiApi(client)
+emailApi = IterableApi.IterableApi(client)
 
 filename = 'test.pdf'
 fh = open(filename, 'rb')
